@@ -14,6 +14,7 @@ fi
 sed -i 's/#Port 22/Port 22/' /etc/ssh/sshd_config
 sed -i 's/#Banner none/Banner \/root\/banner.txt/g' /etc/ssh/sshd_config
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 po=$(cat /etc/ssh/sshd_config | grep "^Port")
 port=$(echo "$po" | sed "s/Port //g")
 adminuser=$(mysql -N -e "use XPanel; select adminuser from setting where id='1';")
@@ -55,11 +56,10 @@ dmp=""
 dmssl=""
 fi
 echo -e "${YELLOW}************ Select XPanel Version ************"
-echo -e "${GREEN} 1)XPanel v3.2.1"
+echo -e "  1)XPanel v3.2"
 echo -e "  2)XPanel v3.1"
 echo -e "  3)XPanel v3.0"
 echo -e "  4)XPanel v2.9"
-echo -e "  5)XPanel v2.8"
 echo -ne "${GREEN}\nSelect Version : ${ENDCOLOR}" ;read n
 if [ "$n" != "" ]; then
 if [ "$n" == "1" ]; then
@@ -73,9 +73,6 @@ linkd=https://api.github.com/repos/Alirezad07/X-Panel-SSH-User-Management/releas
 fi
 if [ "$n" == "4" ]; then
 linkd=https://api.github.com/repos/Alirezad07/X-Panel-SSH-User-Management/releases/tags/xpanelv29
-fi
-if [ "$n" == "5" ]; then
-linkd=https://api.github.com/repos/Alirezad07/X-Panel-SSH-User-Management/releases/tags/xpanelv28
 fi
 else
 linkd=https://api.github.com/repos/Alirezad07/X-Panel-SSH-User-Management/releases/tags/xpanelv32
@@ -125,7 +122,7 @@ sudo NEETRESTART_MODE=a apt-get update --yes
 sudo apt-get -y install software-properties-common
 apt-get install -y dropbear && apt-get install -y stunnel4 && apt-get install -y cmake && apt-get install -y screenfetch && apt-get install -y openssl
 sudo add-apt-repository ppa:ondrej/php -y
-#sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install postfix -y
 apt-get install apache2 php7.4 zip unzip net-tools curl mariadb-server -y
 apt-get install php7.4-mysql php7.4-xml php7.4-curl -y
 
@@ -151,12 +148,16 @@ EOF
 mkdir /etc/stunnel
 cat << EOF > /etc/stunnel/stunnel.conf
  cert = /etc/stunnel/stunnel.pem
+ client = no
+ socket = a:SO_REUSEADDR=1
+ socket = l:TCP_NODELAY=1
+ socket = r:TCP_NODELAY=1
  [dropbear]
  accept = $dropbear_tls_port
- connect = 0.0.0.0:$dropbear_port
+ connect = 127.0.0.1:$dropbear_port
  [openssh]
  accept = $sshtls_port
- connect = 0.0.0.0:$port
+ connect = 127.0.0.1:$port
 EOF
 
 echo "=================  XPanel OpenSSL ======================"
@@ -452,7 +453,7 @@ multiin=$(echo "$protcohttp://${defdomain}:$sshttp/fixer&jub=multi")
 cat > /var/www/html/cp/Libs/sh/kill.sh << ENDOFFILE
 #!/bin/bash
 #By Alireza
-chmod 777 /var/log/auth.log
+
 i=0
 while [ 1i -lt 20 ]; do
 cmd=(bbh '$multiin')
@@ -490,10 +491,6 @@ chmod 777 /var/www/html/cp/Libs/sh/stunnel.sh
 wait
 chmod 777 /etc/stunnel/stunnel.conf
 wait
-chmod 777 /var/log/auth.log
-wait
-chmod 777 /var/www/html/cp/Libs/sh/droptraffic.sh 
-wait
 chmod 777 /var/www/html/cp/assets/js/config.js
 wait
 if [ "$xport" != "" ]; then
@@ -506,18 +503,7 @@ fi
 (crontab -l ; echo "* * * * * wget -q -O /dev/null '$protcohttp://${defdomain}:$sshttp/fixer&jub=exp' > /dev/null 2>&1") | crontab -
 (crontab -l ; echo "* * * * * wget -q -O /dev/null '$protcohttp://${defdomain}:$sshttp/fixer&jub=synstraffic' > /dev/null 2>&1") | crontab -
 sudo wget -O $protcohttp://${defdomain}:$sshttp/reinstall
-wait
-curl $protcohttp://${defdomain}:$sshttp/reinstall
-systemctl enable dropbear &
-wait
-systemctl restart dropbear &
-wait
-systemctl enable stunnel4 &
-wait
-systemctl restart stunnel4 &
-wait
 clear
-chmod 777 /var/log/auth.log
 echo -e "${YELLOW}************ XPanel ************ \n"
 echo -e "XPanel Link : $protcohttp://${defdomain}:$sshttp/login \n"
 echo -e "Username : \e[31m${adminusername}\e[0m  \n"

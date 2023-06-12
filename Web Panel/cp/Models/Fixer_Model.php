@@ -19,6 +19,20 @@ class Fixer_Model extends Model
                 if ($expiredate < strtotime(date("Y-m-d")) || $expiredate == strtotime(date("Y-m-d"))) {
                     $sql = "UPDATE users SET enable=? WHERE username=?";
                     $this->db->prepare($sql)->execute(['expired', $us["username"]]);
+                    $dropbear = shell_exec("ps aux | grep -i dropbear | awk '{print $2}'");
+                    $dropbear = preg_split("/\r\n|\n|\r/", $dropbear);
+                    foreach ($dropbear as $pid) {
+
+                        $user_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | awk '{print $10}'");
+                        $user_drop=str_replace("'", "",$user_drop);
+                        $user_drop=str_replace("\n", "",$user_drop);
+                        $user_drop = htmlentities($user_drop);
+
+                        if ($user_drop==$us["username"]) {
+
+                            shell_exec("sudo kill -9 " . $pid);
+                        }
+                    }
                     shell_exec("sudo killall -u " . $us["username"]);
                     shell_exec("bash Libs/sh/deleteuser " . $us["username"]);
                 }
@@ -36,6 +50,20 @@ class Fixer_Model extends Model
                 if ($us["traffic"] < $total && !empty($us["traffic"])) {
                     $sql = "UPDATE users SET enable=? WHERE username=?";
                     $this->db->prepare($sql)->execute(['traffic', $us["username"]]);
+                    $dropbear = shell_exec("ps aux | grep -i dropbear | awk '{print $2}'");
+                    $dropbear = preg_split("/\r\n|\n|\r/", $dropbear);
+                    foreach ($dropbear as $pid) {
+
+                        $user_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | awk '{print $10}'");
+                        $user_drop=str_replace("'", "",$user_drop);
+                        $user_drop=str_replace("\n", "",$user_drop);
+                        $user_drop = htmlentities($user_drop);
+
+                        if ($user_drop==$us["username"]) {
+
+                            shell_exec("sudo kill -9 " . $pid);
+                        }
+                    }
                     shell_exec("sudo killall -u " . $us["username"]);
                     shell_exec("bash Libs/sh/deleteuser " . $us["username"]);
                 }
@@ -56,6 +84,19 @@ class Fixer_Model extends Model
         {
             $multiuser=$val['multiuser'];
         }
+        $dropbear = shell_exec("ps aux | grep -i dropbear | awk '{print $2}'");
+        $dropbear = preg_split("/\r\n|\n|\r/", $dropbear);
+        foreach ($dropbear as $pid) {
+
+            $num_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | wc -l");
+            $user_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | awk '{print $10}'");
+            $ip_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | awk '{print $12}'");
+            $user_drop=str_replace("'", "",$user_drop);
+            $user_drop=str_replace("\n", "",$user_drop);
+            if ($num_drop > 0) {
+                $onlinelist[] = $user_drop;
+            }
+        }
         $list = shell_exec("sudo lsof -i :".PORT." -n | grep -v root | grep ESTABLISHED");
         $onlineuserlist = preg_split("/\r\n|\n|\r/", $list);
         foreach($onlineuserlist as $user){
@@ -63,7 +104,7 @@ class Fixer_Model extends Model
             $userarray = explode(" ",$user);
             $onlinelist[] = $userarray[2];
         }
-echo "success";
+        echo "success";
         $onlinecount = array_count_values($onlinelist);
         foreach($queryCount as $row){
             $limitation = $row['multiuser'];
@@ -85,13 +126,29 @@ echo "success";
                 }
 
             }
+            foreach ($dropbear as $pid) {
 
+                $num_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | wc -l");
+                $user_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | awk '{print $10}'");
+                $ip_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | awk '{print $12}'");
+                $user_drop=str_replace("'", "",$user_drop);
+                $user_drop=str_replace("\n", "",$user_drop);
+                $user_drop = htmlentities($user_drop);
+
+                if ($num_drop > 0 && $user_drop==$username && $limitation !== "0" && $onlinecount[$username] > $limitation) {
+                    if ($multiuser=='on') {
+                        shell_exec("sudo kill -9 " . $pid);
+                    }
+                }
+            }
             if ($limitation !== "0" && $onlinecount[$username] > $limitation){
 
                 if ($multiuser=='on') {
                     shell_exec('sudo killall -u ' . $username);
                 }
             }
+
+
             //header("Refresh:1");
         }
     }
@@ -99,17 +156,16 @@ echo "success";
     public function synstraffic()
     {
 
-        $pid = shell_exec("nethogs");
+        $pid = shell_exec("pgrep nethogs");
         $pid = preg_replace("/\\s+/", "", $pid);
         // print_r($pid);
-        if (!is_numeric($pid)) {
-            $out = shell_exec("cat /var/www/html/cp/storage/log/out.json");
-            $usertraffic = [];
+        if (is_numeric($pid)) {
+            $out = file_get_contents("/var/www/html/cp/storage/log/out.json");
             $trafficlog = preg_split("/\r\n|\n|\r/", $out);
             $trafficlog = array_filter($trafficlog);
             $lastdata = end($trafficlog);
             $json = json_decode($lastdata, true);
-            print_r($json);
+            //print_r($json);
             $newarray = [];
             foreach ($json as $value) {
                 $TX = round($value["TX"], 0);
@@ -119,6 +175,18 @@ echo "success";
                     $name = "";
                 }
                 if (strpos($name, "root") !== false) {
+                    $name = "";
+                }
+                if (strpos($name, "/usr/sbin/dropbear") !== false) {
+                    $name = "";
+                }
+                if (strpos($name, "/usr/bin/stunnel4") !== false) {
+                    $name = "";
+                }
+                if (strpos($name, "unknown TCP") !== false) {
+                    $name = "";
+                }
+                if (strpos($name, "/usr/sbin/apache2") !== false) {
                     $name = "";
                 }
                 if (strpos($name, "[net]") !== false) {
@@ -158,7 +226,7 @@ echo "success";
                     }
                 }
             }
-            echo json_encode($newarray);
+            //echo json_encode($newarray);
             foreach ($newarray as $username => $usr) {
                 $stmt = $this->db->prepare("SELECT * FROM Traffic WHERE user=:user");
                 $stmt->execute(['user' => $username]);
@@ -166,9 +234,12 @@ echo "success";
                 $userdownload = $user["download"];
                 $userupload = $user["upload"];
                 $usertotal = $user["total"];
-                $lastdownload = $userdownload + $usr["RX"];
-                $lastupload = $userupload + $usr["TX"];
-                $lasttotal = $usertotal + $usr["Total"];
+                $rx=round($usr["RX"]/1.70);
+                $tx=round($usr["TX"]/1.70);
+                $tot=round($usr["Total"]/1.70);
+                $lastdownload = $userdownload + $rx;
+                $lastupload = $userupload + $tx;
+                $lasttotal = $usertotal + $tot;
                 $query = $this->db->prepare("select * from Traffic where user='".$username."'");
                 $query->execute();
                 $queryCount = $query->rowCount();
@@ -176,12 +247,14 @@ echo "success";
                     $sql = "INSERT INTO `Traffic` (`id`,`user`, `download`, `upload`, `total` ) VALUES (NULL,?,?,?,?)";
                     $stmt = $this->db->prepare($sql);
                     $stmt->execute(array($username, $lastdownload, $lastupload, $lasttotal));
+                    shell_exec("sudo rm -rf /var/www/html/cp/storage/log/out.json");
 
                 }
                 else
                 {
                     $sql = "UPDATE Traffic SET upload=?,download=?,total=? WHERE user=?";
                     $this->db->prepare($sql)->execute([$lastupload,$lastdownload,$lasttotal, $username]);
+                    shell_exec("sudo rm -rf /var/www/html/cp/storage/log/out.json");
                 }
             }
             $query = $this->db->prepare("select * from users");
@@ -230,22 +303,88 @@ echo "success";
                     }
                 }
                 //header("Refresh:1");
-
-                if(file_exists("storage/log/out.json"))
-                {
-                    unlink("storage/log/out.json");
-                }
             }
             shell_exec("sudo kill -9 " . $pid);
             shell_exec("sudo killall -9 nethogs");
+            shell_exec("sudo rm -rf /var/www/html/cp/storage/log/out.json");
             shell_exec("sudo nethogs -j -d 19 -v 3 > /var/www/html/cp/storage/log/out.json &");
-        } else {
-            if(file_exists("storage/log/out.json"))
-            {
-                unlink("storage/log/out.json");
+        }
+
+
+        $dropbear = shell_exec("ps aux | grep -i dropbear | awk '{print $2}'");
+        $dropbear = preg_split("/\r\n|\n|\r/", $dropbear);
+        foreach ($dropbear as $pid) {
+            $out_drop = file_get_contents("/var/www/html/cp/storage/log/dropout.json");
+            $trafficlog_drop = preg_split("/\r\n|\n|\r/", $out_drop);
+            $trafficlog_drop = array_filter($trafficlog_drop);
+            $lastdata_drop = end($trafficlog_drop);
+            $json_drop = json_decode($lastdata_drop, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $newarray_drop=[];
+            foreach ($json_drop as $value) {
+                $TX = round($value["TX"], 0);
+                $RX = round($value["RX"], 0);
+                $name = preg_replace("/\\s+/", "", $value["name"]);
+                if ($name == "/usr/sbin/dropbear") {
+                    $PID_USER=$value["PID"];
+                    $user_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$PID_USER\]\" | awk '{print $10}'");
+                    $user_drop=str_replace("'", "",$user_drop);
+                    $user_drop=str_replace("\n", "",$user_drop);
+                    $user_drop = htmlentities($user_drop);
+                    $name=$user_drop;
+                    if ($value["RX"] < 1 && $value["TX"] < 1) {
+                        $name = "";
+                    }
+
+                    if (!empty($name)) {
+                        if (isset($newarray[$name])) {
+                            $newarray[$name]["TX"] + $TX;
+                            $newarray[$name]["RX"] + $RX;
+
+                        } else {
+                            $newarray[$name] = ["RX" => $RX, "TX" => $TX, "Total" => $RX + $TX];
+                        }
+                    }
+                }
+                else
+                {
+                    $name="";
+                }
+
             }
-            shell_exec("sudo nethogs -j -d 19 -v 3 > /var/www/html/cp/storage/log/out.json &");
-            header("Refresh:1");
+            foreach ($newarray as $username => $usr) {
+                $stmt = $this->db->prepare("SELECT * FROM Traffic WHERE user=:user");
+                $stmt->execute(['user' => $username]);
+                $user = $stmt->fetch();
+                $userdownload = $user["download"];
+                $userupload = $user["upload"];
+                $usertotal = $user["total"];
+                $rx=round($usr["RX"]/1.70);
+                $tx=round($usr["TX"]/1.70);
+                $tot=round($usr["Total"]/1.70);
+                $lastdownload = $userdownload + $rx;
+                $lastupload = $userupload + $tx;
+                $lasttotal = $usertotal + $tot;
+                $query = $this->db->prepare("select * from Traffic where user='".$username."'");
+                $query->execute();
+                $queryCount = $query->rowCount();
+                if ($queryCount < 1) {
+                    $sql = "INSERT INTO `Traffic` (`id`,`user`, `download`, `upload`, `total` ) VALUES (NULL,?,?,?,?)";
+                    $stmt = $this->db->prepare($sql);
+                    $stmt->execute(array($username, $lastdownload, $lastupload, $lasttotal));
+                    shell_exec("sudo rm -rf /var/www/html/cp/storage/log/dropout.json");
+
+                }
+                else
+                {
+                    $sql = "UPDATE Traffic SET upload=?,download=?,total=? WHERE user=?";
+                    $this->db->prepare($sql)->execute([$lastupload,$lastdownload,$lasttotal, $username]);
+                    shell_exec("sudo rm -rf /var/www/html/cp/storage/log/dropout.json");
+                }
+            }
+            $num_drop = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"dropbear\[$pid\]\" | wc -l");
+            if ($num_drop > 0) {
+                shell_exec("bash Libs/sh/droptraffic.sh");
+            }
         }
 
     }

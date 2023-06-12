@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d50d8e18-a0fd-450a-835d-0b5aea5e7d6b" name="Changes" comment="fix bug">
+    <list default="true" id="d50d8e18-a0fd-450a-835d-0b5aea5e7d6b" name="Changes" comment="Fix BUG Version 3.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Libs/lang/en-us.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Libs/lang/en-us.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Libs/lang/fa-ir.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Libs/lang/fa-ir.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Views/Index/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Views/Index/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Libs/Bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Libs/Bootstrap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Libs/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Libs/View.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web Panel/cp/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +32,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2QDDq6sr2lyuyL2QzDq5eB757Jf" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -58,7 +61,15 @@
       <option name="presentableId" value="Default" />
       <updated>1684879446141</updated>
       <workItem from="1684879447595" duration="5392000" />
-      <workItem from="1684953996179" duration="6529000" />
+      <workItem from="1684953996179" duration="7251000" />
+      <workItem from="1685213214947" duration="590000" />
+      <workItem from="1685471577221" duration="1915000" />
+      <workItem from="1685656452023" duration="561000" />
+      <workItem from="1685660101165" duration="1168000" />
+      <workItem from="1685862743562" duration="592000" />
+      <workItem from="1685994314765" duration="23702000" />
+      <workItem from="2064859571877" duration="18883000" />
+      <workItem from="1686390666138" duration="5579000" />
     </task>
     <task id="LOCAL-00001" summary="ADD web panel open source">
       <created>1684882940503</created>
@@ -137,7 +148,140 @@
       <option name="project" value="LOCAL" />
       <updated>1685087721643</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fix Alert New Version">
+      <created>1685090825753</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1685090825753</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fix New Version 3.2">
+      <created>1686133483013</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1686133483066</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix New Version 3.2">
+      <created>1686148602590</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1686148602590</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix New Version 3.2">
+      <created>1686148990697</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1686148990697</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fix New Version 3.2">
+      <created>1686149291703</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1686149291703</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fix New Version 3.2">
+      <created>1686149378092</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1686149378092</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fix New Version 3.2">
+      <created>1686151223521</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1686151223521</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Fix New Version 3.2">
+      <created>1686209051135</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1686209051135</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fix New Version 3.2">
+      <created>1686210093963</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1686210093963</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fix New Version 3.2">
+      <created>1686212663469</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1686212663469</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Fix New Version 3.2">
+      <created>1686213022093</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1686213022093</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Fix New Version 3.2">
+      <created>1686217821881</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1686217821881</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Fix New Version 3.2">
+      <created>1686282348260</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1686282348260</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Fix New Version 3.2">
+      <created>1686282385285</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1686282385285</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Fix BUG Version 3.2">
+      <created>1686292510804</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1686292510819</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Fix BUG Version 3.2">
+      <created>1686295386944</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1686295386944</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Fix BUG Version 3.2">
+      <created>1686392578979</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1686392578979</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Fix BUG Version 3.2">
+      <created>1686397166112</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1686397166112</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Fix BUG Version 3.2">
+      <created>1686398799149</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1686398799149</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +313,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ADD web panel open source" />
     <MESSAGE value="fix bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
+    <MESSAGE value="Fix Alert New Version" />
+    <MESSAGE value="Fix New Version 3.2" />
+    <MESSAGE value="Fix BUG Version 3.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix BUG Version 3.2" />
   </component>
 </project>

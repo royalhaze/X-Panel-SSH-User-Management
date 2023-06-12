@@ -4,7 +4,7 @@ $json = file_get_contents('https://raw.githubusercontent.com/Alirezad07/X-Panel-
 $obj = json_decode($json);
 if(LANG=='fa-ir'){$github='https://github.com/Alirezad07/X-Panel-SSH-User-Management#%D9%86%D8%B5%D8%A8';}
 else {$github='https://github.com/Alirezad07/X-Panel-SSH-User-Management/blob/main/README-EN.md#installation-guide';}
-if($obj->last_version>31) {
+if($obj->last_version>32) {
     echo '
             <div class="p-4 mb-2" style="position: fixed;z-index: 9999;left: 0;">
               <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -37,7 +37,7 @@ if($obj->last_version>31) {
 
         <!-- [ Main Content ] start -->
         <div class="row">
-            <div class="col-md-6 col-xxl-2">
+            <div class="col-6 col-md-3 col-xxl-2">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -52,7 +52,7 @@ if($obj->last_version>31) {
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-xxl-2">
+            <div class="col-6 col-md-3 col-xxl-2">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -68,7 +68,7 @@ if($obj->last_version>31) {
                 </div>
             </div>
 
-            <div class="col-md-6 col-xxl-2">
+            <div class="col-6 col-md-3 col-xxl-2">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -84,15 +84,16 @@ if($obj->last_version>31) {
                 </div>
             </div>
 
-            <div class="col-md-6 col-xxl-2">
+            <div class="col-6 col-md-3 col-xxl-2">
                 <div class="card">
-                    <div class="card-body" style="height: 170px;">
+                    <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
                                 <div class="my-n4" style="width: 130px">
-                                    <h4 style="margin-top: 50px; text-align: center;"><?php echo $data['single']['total'];?></h4>
+                                    <h5 style="margin-top: 10px; text-align: center;"><small>Server</small><br><?php echo $data['single']['total'];?></h5>
+                                    <h5 style="margin-top: 10px; text-align: center;"><small>Client</small><br><?php echo $data['single']['traffic_total'];?></h5>
                                 </div>
-                                <br><br>
+                                <br>
                                 <br>
                                 <h6 class="mb-1"><?php echo bandwidth_usage_lang;?></h6>
                             </div>
@@ -144,7 +145,11 @@ if($obj->last_version>31) {
                                     <?php
                                     foreach ($data['for'] as $datum) {
 
-                                        $to = round($datum["total"] / 1024, 2) . gib_lang;
+                                        if (1024 < $datum["total"]) {
+                                            $to = round($datum["total"] / 1024, 2) .' '.gib_lang;
+                                        } else {
+                                            $to = $datum["total"] .' '.mib_lang;
+                                        }
                                         if(!empty($datum['finishdate'])) {
                                             $finishdate = explode('-', $datum['finishdate']);
                                             $finishdate = gregorian_to_jalali($finishdate[0], $finishdate[1], $finishdate[2]);

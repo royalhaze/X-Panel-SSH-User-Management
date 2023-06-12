@@ -38,6 +38,7 @@ define('mib_lang','مگابایت');
 //users
 define('new_user_lang','کاربر جدید');
 define('multi_user_new_lang','کاربر عمده');
+define('customer_tb_lang','نماینده');
 define('username_tb_lang','نام کاربری');
 define('password_tb_lang','کلمه عبور');
 define('traffic_tb_lang','ترافیک');
@@ -63,6 +64,9 @@ define('reset_u_act_tb_lang','ریست ترافیک');
 define('delete_u_act_tb_lang','حذف');
 define('edit_tooltip_tb_lang','ویرایش');
 define('share_tooltip_tb_lang','اشتراک گذاری');
+define('share_copyconfig_tb_lang','کپی اطلاعات');
+define('share_copynetmod_tb_lang','Netmod');
+define('share_copynv_tb_lang','NV');
 define('modal_username_lang','نام کاربری');
 define('modal_username_lable_lang','نام کاربری را وارد کنید');
 define('modal_pass_lang','کلمه عبور');
@@ -154,7 +158,11 @@ define('setting_multiserver_iptb_lang','IP سرور');
 
 //settings sshport
 define('setting_sshport_alert_lang',' بعد از تغییر پورت سرور ریبوت خواهد شد');
+define('setting_sshport_desc_lang','به هیچ وجه از پورت های تکراری برای فیلد ها استفاده نکنید. همچنین پورت 443 و 80 قابل استفاده نمی باشد');
 define('setting_sshport_lable_lang','تغییر پورت سرور');
+define('setting_sshtlsport_lable_lang','تغییر پورت SSH/TLS');
+define('setting_dropbearport_lable_lang','تغییر پورت Dropbear');
+define('setting_dropbeartlsport_lable_lang','تغییر پورت Dropbear/TLS');
 
 //settings telegram
 define('setting_telegram_alert_lang','این مورد به صورت موقت تا رفع مشکل ارتباط توکن در دسترس نمی باشد');
@@ -178,6 +186,3 @@ define('setting_wordpress_install_lang','آغاز نصب وردپرس');
 
 //settings multiuser
 define('setting_multiuser_dec_lang','به دلیل ایجاد کندی در صفحه لود گزینه نمایش تعداد کاربران متصل در صفحه کاربران انتخابی می باشد');
-
-
-

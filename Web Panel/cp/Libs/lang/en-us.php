@@ -39,6 +39,7 @@ define('mib_lang','MB');
 //users
 define('new_user_lang','New User');
 define('multi_user_new_lang','Bulk User');
+define('customer_tb_lang','Agent');
 define('username_tb_lang','Username');
 define('password_tb_lang','Password');
 define('traffic_tb_lang','Traffic');
@@ -64,6 +65,9 @@ define('reset_u_act_tb_lang','Reset Traffic');
 define('delete_u_act_tb_lang','Delete');
 define('edit_tooltip_tb_lang','Edit');
 define('share_tooltip_tb_lang','Share');
+define('share_copyconfig_tb_lang','Copy Detail');
+define('share_copynetmod_tb_lang','Netmod');
+define('share_copynv_tb_lang','NV');
 define('modal_username_lang','Username');
 define('modal_username_lable_lang','Enter username');
 define('modal_pass_lang','Password');
@@ -155,7 +159,11 @@ define('setting_multiserver_iptb_lang','Server IP');
 
 //settings sshport
 define('setting_sshport_alert_lang','After changing the port, the server will reboot');
+define('setting_sshport_desc_lang','Never use duplicate ports for fields. Also, port 443 and 80 cannot be used');
 define('setting_sshport_lable_lang','Change server port');
+define('setting_sshtlsport_lable_lang','Change SSH/TLS port');
+define('setting_dropbearport_lable_lang','Change Dropbear port');
+define('setting_dropbeartlsport_lable_lang','Change Dropbear/TLS port');
 
 //settings telegram
 define('setting_telegram_alert_lang','This item is temporarily unavailable until the token communication problem is fixed');
