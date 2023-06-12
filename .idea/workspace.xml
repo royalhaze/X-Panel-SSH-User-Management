@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d50d8e18-a0fd-450a-835d-0b5aea5e7d6b" name="Changes" comment="Fix BUG Version 3.2">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-23_19_05__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Libs/Bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Libs/Bootstrap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Libs/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Libs/View.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web Panel/cp/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Controllers/Api.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Controllers/Api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web Panel/cp/Models/Api_Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web Panel/cp/Models/Api_Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +29,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -49,6 +58,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/WebPanel" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/WebPanel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -70,6 +80,7 @@
       <workItem from="1685994314765" duration="23702000" />
       <workItem from="2064859571877" duration="18883000" />
       <workItem from="1686390666138" duration="5579000" />
+      <workItem from="1686586639625" duration="1072000" />
     </task>
     <task id="LOCAL-00001" summary="ADD web panel open source">
       <created>1684882940503</created>
@@ -309,6 +320,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ADD web panel open source" />

@@ -137,6 +137,47 @@ class Api extends Controller
             }
         }
 
+        if(isset($_GET['method']) && $_GET['method'] == 'online'){
+            $duplicate = [];
+            $m = 1;
+            $data = [];
+            $dropb = shell_exec("cat /var/log/auth.log | grep -i dropbear | grep -i \"Password auth succeeded\" | grep \"for 'ttes'\" | awk '{print $5}'");
+
+            $dropbear = shell_exec("ps aux | grep -i dropbear | awk '{print $2}'");
+            $dropbear = preg_split("/\r\n|\n|\r/", $dropbear);
+            $drop_dup = [];
+            $list = shell_exec("sudo lsof -i :" . PORT . " -n | grep -v root | grep ESTABLISHED");
+            $onlineuserlist = preg_split("/\r\n|\n|\r/", $list);
+            foreach ($onlineuserlist as $user) {
+                $user = preg_replace("/\\s+/", " ", $user);
+                if (strpos($user, ":AAAA") !== false) {
+                    $userarray = explode(":", $user);
+                } else {
+                    $userarray = explode(" ", $user);
+                }
+                if (strpos($userarray[8], "->") !== false) {
+                    $userarray[8] = strstr($userarray[8], "->");
+                    $userarray[8] = str_replace("->", "", $userarray[8]);
+                    $userip = substr($userarray[8], 0, strpos($userarray[8], ":"));
+                } else {
+                    $userip = $userarray[8];
+                }
+                $color = "#dc2626";
+                if (!in_array($userarray[2], $duplicate)) {
+                    $color = "#269393";
+                    array_push($duplicate, $userarray[2]);
+                }
+                if (!empty($userarray[2]) && $userarray[2] !== "sshd") {
+                    $drop_dup = $userarray[2];
+
+                    $data[] = [
+                        'username' =>  $userarray[2],
+                        'ip' => $userip
+                    ];
+                }
+            }
+            $this->response($data);
+        }
 
     }
 

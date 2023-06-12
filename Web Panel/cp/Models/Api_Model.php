@@ -8,10 +8,32 @@ class Api_Model extends Model
         parent::__construct();
     }
 
+    public static function getClientRealIp()
+    {
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
+    }
+
     public function check_token($data)
     {
-        $ipremote= $_SERVER['REMOTE_ADDR'];
-        $query = $this->db->prepare("select * from ApiToken where Token='$data' and enable='true' and Allowips='$ipremote'");
+        $ipremote= self::getClientRealIp();
+        $query = $this->db->prepare("select * from ApiToken where Token='$data' and enable='true'");
         $query->execute();
         $queryCount = $query->rowCount();
         if($queryCount>0)
